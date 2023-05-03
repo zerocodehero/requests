@@ -9,50 +9,21 @@ package requests
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/tidwall/gjson"
-	"io"
 	"log"
 	"net/http"
 )
 
-type Config struct {
-	Url     string
-	Method  string
-	Params  map[string]string
-	Headers map[string]string
-	Body    map[string]interface{}
-}
-
-type Response struct {
-	RESPONSE *http.Response
-	ERR      error
-}
-
-func (R *Response) JSON() gjson.Result {
-	return gjson.Parse(string(R.RAW()))
-}
-
-func (R *Response) RAW() []byte {
-	//读取body
-	resBody, err := io.ReadAll(R.RESPONSE.Body) //把  body 内容读入字符串
-	if err != nil {
-		log.Println(err)
-		return []byte(err.Error())
-	}
-	return resBody
-}
-
-func Get(config Config) Response {
+func Get(config Config) *Response {
 	config.Method = "GET"
 	return Send(config)
 }
 
-func Post(config Config) Response {
+func Post(config Config) *Response {
 	config.Method = "POST"
 	return Send(config)
 }
 
-func Send(config Config) (R Response) {
+func Send(config Config) (R *Response) {
 	//add post body
 	var bodyJson []byte
 	if len(config.Body) != 0 {
