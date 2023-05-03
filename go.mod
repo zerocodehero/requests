@@ -1,4 +1,4 @@
-module requests
+module github.com/zerocodehero/requests
 
 go 1.20
 
