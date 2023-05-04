@@ -13,17 +13,17 @@ import (
 	"net/http"
 )
 
-func Get(config Config) *Response {
+func Get(config Config) Response {
 	config.Method = "GET"
 	return Send(config)
 }
 
-func Post(config Config) *Response {
+func Post(config Config) Response {
 	config.Method = "POST"
 	return Send(config)
 }
 
-func Send(config Config) (R *Response) {
+func Send(config Config) (R Response) {
 	//add post body
 	var bodyJson []byte
 	if len(config.Body) != 0 {
